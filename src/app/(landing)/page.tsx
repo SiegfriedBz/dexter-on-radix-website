@@ -1,5 +1,4 @@
 import TopicSection, { DexterButton } from "./components/TopicSection";
-import { KeyFeatures } from "./components/KeyFeatures";
 import TranslationWrapper from "../components/TranslationWrapper";
 
 export enum Device {
@@ -22,6 +21,7 @@ export default function Landing() {
   return (
     <div className="bg-dexter-grey-light">
       <HeroSection />
+      {/* client component */}
       <TopicSection topic={TopicSectionEnum.TOKENOMICS} />
       <TopicSection topic={TopicSectionEnum.TRADE} />
       <TopicSection topic={TopicSectionEnum.STAKE} />
@@ -59,10 +59,12 @@ function HeroSection() {
               `max-[820px]:max-w-[600px] max-[820px]:!mb-2 `
             }
           >
+            {/* client component */}
             <TranslationWrapper label="decentralized_order_book_exchange_on" />
           </h1>
           <div className="relative">
             <BackgroundLights showFor={Device.MOBILE} />
+            {/* client component */}
             <DexterButton title="trade_now" targetUrl="/trade" />
           </div>
           <KeyFeatures showFor={Device.MOBILE} />
@@ -77,6 +79,61 @@ function HeroSection() {
         </div>
       </div>
       <KeyFeatures showFor={Device.DESKTOP} />
+    </div>
+  );
+}
+
+function KeyFeatures({ showFor }: { showFor: Device }) {
+  const content = [
+    ["landing/icons/rocket.svg", "easy_and_fast"],
+    ["landing/icons/decentralized.svg", "decentralized"],
+    ["landing/icons/coins.svg", "earn_rewards_by_trading"],
+  ];
+
+  return (
+    <div
+      className={
+        showFor === Device.DESKTOP
+          ? `flex justify-between w-full max-w-3xl z-50 pt-10 ` +
+            `relative top-10 ` +
+            `min-[401px]:px-4 ` +
+            `max-[820px]:hidden `
+          : `flex justify-between w-full max-w-2xl z-50 pt-10 ` +
+            `min-[401px]:px-4 ` +
+            `min-[821px]:hidden `
+      }
+    >
+      {content.map(([iconUrl, text], indx) => {
+        return (
+          <div
+            key={indx}
+            className={
+              `flex flex-col justify-start items-center w-24 ` +
+              `min-[821px]:w-32`
+            }
+          >
+            <img
+              src={iconUrl}
+              alt={text}
+              className={
+                `w-[24px] ` +
+                `min-[821px]:w-[28px] min-[821px]:opacity-100 ` +
+                `min-[400px]:w-[26px]`
+              }
+            />
+            <p
+              className={
+                `pt-2 text-center opacity-80 text-sm ` +
+                `max-[380px]:text-xs ` +
+                `min-[821px]:text-base`
+              }
+            >
+              {/* client component */}
+              <TranslationWrapper label={text} />
+            </p>
+          </div>
+        );
+      })}
     </div>
   );
 }
